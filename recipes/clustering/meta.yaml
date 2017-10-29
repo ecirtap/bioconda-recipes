@@ -1,0 +1,34 @@
+{% set version = "0.12" %}
+
+package:
+  name: clustering
+  version: {{ version }}
+
+build:
+  number: 1
+  skip: True  # [osx]
+
+source:
+  fn: v{{ version }}.tar.gz
+  url: https://github.com/lettis/Clustering/archive/v{{ version }}.tar.gz
+  md5: 7dcd8dc03faa90b93a7582814bd76e91
+
+requirements:
+  build:
+  - gcc  # [not osx]
+  - llvm # [osx]
+  - boost {{CONDA_BOOST}}*
+  - cmake
+  run:
+  - libgcc # [not osx]
+  - boost {{CONDA_BOOST}}*
+
+about:
+  home: http://lettis.github.io/Clustering/
+  license: Custom OSS
+  license_file: LICENSE.txt
+  summary: Extensive tools for robust and stable clustering of molecular dynamics trajectories
+
+test:
+  commands:
+    - clustering -h 2>&1 | grep 'clustering - a classification framework for MD data'
